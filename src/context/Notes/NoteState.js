@@ -12,11 +12,10 @@ const NoteState = (props) => {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
-        "auth-token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjRiZTVjZGVhZWIxOGYzMDFiNmQ4MDRhIn0sImlhdCI6MTY5MDE5NzIxNH0.jsAzL8FCJzUMP5kDXo9ahzvmJCAQxe0VRooZbQPI7cw"
+        "auth-token": localStorage.getItem('token')
       }
     });
     const json = await response.json();
-    console.log(json)
     setNotes(json)
   }
 
@@ -27,22 +26,12 @@ const NoteState = (props) => {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          "auth-token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjRiZTVjZGVhZWIxOGYzMDFiNmQ4MDRhIn0sImlhdCI6MTY5MDE5NzIxNH0.jsAzL8FCJzUMP5kDXo9ahzvmJCAQxe0VRooZbQPI7cw"
+          "auth-token": localStorage.getItem('token')
         },
         body: JSON.stringify({ title, description, tag }),
       });
-      // const json =  response.json();
-   
-    const note = {
-      "_id": "64bab17a9b68ewc4c92fl8a809",
-      "user": "64b8fffd77c5a1bd2a028bb9",
-      "title": title,
-      "description": description,
-      "tag": tag,
-      "date": "2023-07-21T16:25:30.451Z",
-      "__v": 0
-    }
-    setNotes(notes.concat(note))
+      const note = await response.json();
+       setNotes(notes.concat(note))
   }
   //Delete a note
   const deleteNote = async (id) => {
@@ -51,11 +40,10 @@ const NoteState = (props) => {
       method: "DELETE",
       headers: {
         "Content-Type": "application/json",
-        "auth-token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjRiZTVjZGVhZWIxOGYzMDFiNmQ4MDRhIn0sImlhdCI6MTY5MDE5NzIxNH0.jsAzL8FCJzUMP5kDXo9ahzvmJCAQxe0VRooZbQPI7cw"
+        "auth-token": localStorage.getItem('token')
       }
     });
     const json = response.json();
-    console.log(json)
     const NewNote = notes.filter((note) => { return note._id !== id })
     setNotes(NewNote)
     console.log("Note has been deleted Successfully!", id)
@@ -65,27 +53,28 @@ const NoteState = (props) => {
     // Api call
     
       const response = await fetch(`${host}/api/notes/updatenotes/${id}`, {
-        method: "POST",
+        method: "PUT",
         headers: {
           "Content-Type": "application/json",
-          "auth-token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjRiZTVjZGVhZWIxOGYzMDFiNmQ4MDRhIn0sImlhdCI6MTY5MDE5NzIxNH0.jsAzL8FCJzUMP5kDXo9ahzvmJCAQxe0VRooZbQPI7cw"
+          "auth-token": localStorage.getItem('token')
         },
         body: JSON.stringify({title , description, tag}),
       });
       const json = response.json();
    
 
-
+      let newNotes = JSON.parse(JSON.stringify(notes))
     //Edit the notes at client side
-    for (let index = 0; index < notes.length; index++) {
-      const element = notes[index];
+    for (let index = 0; index < newNotes.length; index++) {
+      const element = newNotes[index];
       if (element._id === id) {
-        element.title = title;
-        element.description = description;
-        element.tag = tag
+        newNotes[index].title = title;
+        newNotes[index].description = description;
+        newNotes[index].tag = tag
+        break;
       }
-
     }
+    setNotes(newNotes)
 
   }
   return (

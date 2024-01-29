@@ -1,8 +1,14 @@
-const express = require('express');
+import express from 'express';
+import fetchuser from '../middleware/fetchuser.js';
+import Notes from '../models/Notes.js';
+import { body, validationResult } from 'express-validator';
 const router = express.Router();
-const fetchuser = require('../middleware/fetchuser');
-const Notes = require('../models/Notes') // imported the Notes.js file
-const { body, validationResult } = require('express-validator'); //import express validator 
+
+// const express = require('express');
+// const fetchuser = require('../middleware/fetchuser');
+// const Notes = require('../models/Notes') // imported the Notes.js file
+// const { body, validationResult } = require('express-validator'); //import express validator 
+
 
 
 // Route 1 : Get all notes: Get "/api/notes/fetchallnotes". Login required
@@ -94,4 +100,5 @@ router.post('/addnotes', fetchuser, [
 
 })
 
-module.exports = router
+// module.exports = router
+export default router;
