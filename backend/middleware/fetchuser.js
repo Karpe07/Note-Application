@@ -2,7 +2,7 @@ import jwt from 'jsonwebtoken';
 
 
 // const jwt = require('jsonwebtoken');
-const JWT_SECRETE = "Akashisgoodboy"
+const JWT_SECRETE = "YourJWT_SECREATE"
 
 
 const fetchuser = (req, res, next) =>{
