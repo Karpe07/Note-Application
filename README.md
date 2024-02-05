@@ -21,3 +21,16 @@ User-Friendly Interface: The application offers an intuitive and responsive UI f
 CRUD Operations: Users can easily Create, Read, Update, and Delete their notes, providing full control over their data.
 
 Organized Management: The MERN stack ensures organized and efficient management of notes, enhancing productivity.
+
+Getting Started
+
+Clone the Repository:
+git clone https://github.com/your-username/your-repo.git
+cd your-repo
+
+Install Dependencies:
+npm install
+
+Run the Application:
+npm start
+
